@@ -1,13 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\WPR.Entities.Abstractions\WPR.Entities.Abstractions.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Интерфейсы репозиториев</Title>
+		<Authors>tj_d</Authors>
+		<PackageIcon>repo.jpeg</PackageIcon>
+		<NeutralLanguage>ru</NeutralLanguage>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="C:\Users\Денис\Desktop\repo.jpeg" Link="repo.jpeg">
+			<PackagePath>\</PackagePath>
+			<Pack>True</Pack>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\WPR.Entities.Abstractions\WPR.Entities.Abstractions.csproj" />
+	</ItemGroup>
 
 </Project>
