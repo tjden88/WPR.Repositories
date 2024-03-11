@@ -14,6 +14,6 @@ public interface IPage<out T> : IPage
     /// <summary>
     /// Общее количество сущностей в выборке
     /// </summary>
-    int TotalCount { get; }
+    int TotalItemsCount { get; }
 
 }
