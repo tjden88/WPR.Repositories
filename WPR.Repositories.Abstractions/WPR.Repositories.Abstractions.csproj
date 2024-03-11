@@ -3,7 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-	  <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WPR.Entities.Abstractions\WPR.Entities.Abstractions.csproj" />
+  </ItemGroup>
 
 </Project>

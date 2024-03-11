@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Entities", "WPR.Entitie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Entities.Abstractions", "WPR.Entities.Abstractions\WPR.Entities.Abstractions.csproj", "{AC7C04ED-5C6C-400F-AA91-3A413D048184}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Repositories.Abstractions", "WPR.Repositories.Abstractions\WPR.Repositories.Abstractions.csproj", "{7D79B9AF-8FA8-409A-98DC-2036976C8DBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{AC7C04ED-5C6C-400F-AA91-3A413D048184}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC7C04ED-5C6C-400F-AA91-3A413D048184}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC7C04ED-5C6C-400F-AA91-3A413D048184}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D79B9AF-8FA8-409A-98DC-2036976C8DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D79B9AF-8FA8-409A-98DC-2036976C8DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D79B9AF-8FA8-409A-98DC-2036976C8DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D79B9AF-8FA8-409A-98DC-2036976C8DBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
