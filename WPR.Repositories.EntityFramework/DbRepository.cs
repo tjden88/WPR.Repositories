@@ -1,0 +1,297 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using WPR.Entities.Abstractions.Base;
+using WPR.Entities.Abstractions.Db;
+using WPR.Entities.Db;
+using WPR.Entities.Paging;
+using WPR.Repositories.Abstractions.Db;
+using WPR.Repositories.Abstractions.Paging;
+
+namespace WPR.Repositories.EntityFramework;
+
+/// <summary>
+/// Репозиторий сущностей БД
+/// </summary>
+/// <typeparam name="T">Сущность БД</typeparam>
+public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity, new()
+{
+    // Контекст БД
+
+    private static bool IsDeletedEntity => typeof(IDeletedDbEntity).IsAssignableFrom(typeof(T));
+
+
+    /// <summary> Набор данных БД </summary>
+    protected LocalView<T> Set => Db.Set<T>().Local;
+
+
+    #region IRepository
+    protected virtual IEnumerable<T> Items
+    {
+        get
+        {
+            IEnumerable<T> itemsQuery = Set;
+
+            if (IsDeletedEntity)
+                itemsQuery = itemsQuery.Where(item => !((IDeletedEntity<int>)item).IsDeleted);
+
+            return itemsQuery;
+        }
+    }
+
+
+    public Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, object>>? OrderExpression = null, CancellationToken Cancel = default) => 
+        Task.FromResult<IEnumerable<T>>(Items.OrderBy(OrderExpression?.Compile() ?? (item => item.Id)));
+
+    public Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> Filter, CancellationToken Cancel = default) => 
+        Task.FromResult(Items.Where(Filter.Compile()));
+
+
+    public virtual async Task<IPage<T>> GetPageAsync(int PageIndex, int PageSize, Expression<Func<T, object>>? OrderExpression = null, bool Ascending = true, CancellationToken Cancel = default) =>
+        await GetPageAsync(new PageFilter<T>
+        {
+            PageIndex = PageIndex,
+            PageSize = PageSize,
+            OrderBy = OrderExpression is null
+                ? null
+                : new PageOrderInfo<T>(OrderExpression, Ascending),
+        }, Cancel)
+            .ConfigureAwait(false);
+
+
+    public virtual async Task<IPage<T>> GetPageAsync(IPageFilter<T> Filter, CancellationToken Cancel = default)
+    {
+        var pageIndex = Filter.PageIndex;
+        var pageSize = Filter.PageSize;
+
+        if (pageIndex < 1)
+            throw new ArgumentOutOfRangeException(nameof(pageIndex), "Номер страницы не может быть меньше 1");
+
+        if (pageSize <= 0)
+            throw new ArgumentOutOfRangeException(nameof(pageSize), "Размер страницы должен быть больше нуля");
+
+        var items = Items.AsQueryable();
+
+        var query = Filter.Filter is null
+            ? items
+            : items.Where(Filter.Filter);
+
+        var count = query.Count();
+
+        if (Filter.OrderBy is { } orderBy)
+            query = orderBy.IsAscending
+                ? query.OrderBy(orderBy.OrderExpression)
+                : query.OrderByDescending(orderBy.OrderExpression);
+        else
+            query = query.OrderBy(item => item.Id);
+
+
+        if (Filter.ThenOrderBy?.Any() == true)
+            foreach (var thenOrder in Filter.ThenOrderBy)
+                query = thenOrder.IsAscending
+                    ? ((IOrderedQueryable<T>)query).ThenBy(thenOrder.OrderExpression)
+                    : ((IOrderedQueryable<T>)query).ThenByDescending(thenOrder.OrderExpression);
+
+
+        if (pageIndex > 1)
+            query = query.Skip((pageIndex - 1) * pageSize);
+
+        query = query.Take(pageSize);
+
+        return new Page<T>(await query.ToArrayAsync(Cancel).ConfigureAwait(false), count, pageIndex, pageSize);
+    }
+
+
+    public virtual Task<int> CountAsync(CancellationToken Cancel = default) => Task.FromResult(Items.Count());
+
+    public Task<int> CountAsync(Expression<Func<T, bool>> Filter, CancellationToken Cancel = default) => Task.FromResult(Items.Count(Filter.Compile()));
+
+
+    public virtual Task<bool> ExistAsync(int id, CancellationToken Cancel = default) => Task.FromResult(Items.Any(item => Equals(id, item.Id)));
+
+
+    public virtual Task<T?> GetByIdAsync(int id, CancellationToken Cancel = default) => Task.FromResult(Items.FirstOrDefault(item => item.Id == id));
+
+
+    public virtual async Task<T?> AddAsync(T item, CancellationToken Cancel = default)
+    {
+        if (item == null) throw new ArgumentNullException(nameof(item));
+
+        Db.Entry(item).State = EntityState.Added;
+
+        try
+        {
+            var result = await Db.SaveChangesAsync(Cancel).ConfigureAwait(false) > 0;
+
+            return result
+                ? item
+                : null;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
+
+    public virtual async Task<int> AddRangeAsync(IEnumerable<T> items, CancellationToken Cancel = default)
+    {
+        if (items == null) throw new ArgumentNullException(nameof(items));
+
+        foreach (var item in items)
+            Db.Entry(item).State = EntityState.Added;
+
+        try
+        {
+            return await Db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+        }
+        catch (Exception)
+        {
+            return 0;
+        }
+    }
+
+
+    public virtual async Task<bool> UpdateAsync(T item, CancellationToken Cancel = default)
+    {
+        if (!await UpdateEntity(item, Cancel).ConfigureAwait(false)) return false;
+
+        try
+        {
+            var changesCount = await Db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+            var result = changesCount > 0;
+
+            return result;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+
+
+    public virtual async Task<int> UpdateRangeAsync(IEnumerable<T> items, CancellationToken Cancel = default)
+    {
+        if (items == null) throw new ArgumentNullException(nameof(items));
+
+        foreach (var item in items)
+            await UpdateEntity(item, Cancel).ConfigureAwait(false);
+
+        try
+        {
+            return await Db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+        }
+        catch (Exception)
+        {
+            return 0;
+        }
+    }
+
+    private async Task<bool> UpdateEntity(T item, CancellationToken Cancel)
+    {
+        if (item == null) throw new ArgumentNullException(nameof(item));
+
+        var localItem = await GetByIdAsync(item.Id, Cancel).ConfigureAwait(false);
+        if (localItem == null)
+            return false;
+
+        if (!ReferenceEquals(localItem, item))
+            Db.Entry(localItem).State = EntityState.Detached;
+
+        Db.Entry(item).State = EntityState.Modified;
+        return true;
+    }
+
+
+
+    public virtual async Task<bool> UpdatePropertyAsync(T item, Expression<Func<T, object>> property, CancellationToken Cancel = default) =>
+        await UpdatePropertiesAsync(item, new[] { property }, Cancel);
+
+
+    public virtual async Task<bool> UpdatePropertiesAsync(T item, IEnumerable<Expression<Func<T, object>>> properties, CancellationToken Cancel = default) => 
+        await UpdateAsync(item, Cancel).ConfigureAwait(false);
+
+
+    public virtual async Task<bool> DeleteAsync(int id, CancellationToken Cancel = default)
+    {
+
+        var item = Items.FirstOrDefault(i => Equals(id, i.Id));
+        if (item == null)
+        {
+            return false;
+        }
+
+        MarkDeletedOrDelete(new[] { item });
+
+        try
+        {
+            return await Db.SaveChangesAsync(Cancel).ConfigureAwait(false) > 0;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+
+    public virtual async Task<int> DeleteRangeAsync(IEnumerable<int> ids, CancellationToken Cancel = default)
+    {
+        var existing = Items.Select(item => item.Id)
+            .Where(ids.Contains);
+
+        var itemsToDelete = existing
+            .Select(id =>
+            {
+                var entity = Items.FirstOrDefault(i => Equals(id, i.Id));
+                if (entity == null)
+                {
+                    var dbEntity = new T { Id = id };
+                    Db.Attach(dbEntity);
+                    return dbEntity;
+                }
+                return entity;
+
+            });
+
+        MarkDeletedOrDelete(itemsToDelete);
+
+        try
+        {
+            return await Db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+        }
+        catch (Exception)
+        {
+            return 0;
+        }
+    }
+
+    #endregion
+
+
+    /// <summary> Пометить на удаление или удалить окончательно </summary>
+    protected virtual void MarkDeletedOrDelete(IEnumerable<T> items)
+    {
+        if (IsDeletedEntity)
+        {
+            foreach (var item in items)
+            {
+                var deletedEntity = (IDeletedEntity<int>)item;
+                Db.Entry(deletedEntity).State = EntityState.Unchanged;
+                deletedEntity.IsDeleted = true;
+                Db.Entry(deletedEntity)
+                    .Property(delItem => delItem.IsDeleted).IsModified = true;
+            }
+        }
+        else
+            foreach (var item in items)
+                Db.Entry(item).State = EntityState.Deleted;
+    }
+
+    public Task<T?> GetOne(Expression<Func<T, bool>> Match, CancellationToken cancel = default) => Task.FromResult(Items.FirstOrDefault(Match.Compile()));
+}

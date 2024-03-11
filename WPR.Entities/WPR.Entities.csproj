@@ -24,6 +24,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\WPR.Entities.Abstractions\WPR.Entities.Abstractions.csproj" />
+		<ProjectReference Include="..\WPR.Repositories.Abstractions\WPR.Repositories.Abstractions.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
