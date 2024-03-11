@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Реализации репозиториев для баз данных Entity Framework</Title>
+		<Authors>tj_d</Authors>
+		<PackageIcon>repo.jpeg</PackageIcon>
+		<NeutralLanguage>ru</NeutralLanguage>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="C:\Users\Денис\Desktop\repo.jpeg" Link="repo.jpeg">
+	    <PackagePath>\</PackagePath>
+	    <Pack>True</Pack>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\WPR.Entities\WPR.Entities.csproj" />
+	  <ProjectReference Include="..\WPR.Repositories.Abstractions\WPR.Repositories.Abstractions.csproj" />
+	</ItemGroup>
+
+</Project>
