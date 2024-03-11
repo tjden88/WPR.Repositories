@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Repositories", "WPR.Repositories\WPR.Repositories.csproj", "{8B7177B0-AFEB-4530-9EDC-AB485D06900B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Entities", "WPR.Entities\WPR.Entities.csproj", "{8CA93905-E2DF-467E-BF98-D53960B81808}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Entities.Abstractions", "WPR.Entities.Abstractions\WPR.Entities.Abstractions.csproj", "{AC7C04ED-5C6C-400F-AA91-3A413D048184}"
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8B7177B0-AFEB-4530-9EDC-AB485D06900B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B7177B0-AFEB-4530-9EDC-AB485D06900B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8B7177B0-AFEB-4530-9EDC-AB485D06900B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B7177B0-AFEB-4530-9EDC-AB485D06900B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8CA93905-E2DF-467E-BF98-D53960B81808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8CA93905-E2DF-467E-BF98-D53960B81808}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CA93905-E2DF-467E-BF98-D53960B81808}.Release|Any CPU.ActiveCfg = Release|Any CPU
