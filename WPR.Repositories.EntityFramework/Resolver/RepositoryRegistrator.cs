@@ -2,16 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WPR.Repositories.Abstractions.Db;
-using WPR.Repositories.EntityFramework.Resolver;
 
-namespace WPR.Repositories.EntityFramework;
+namespace WPR.Repositories.EntityFramework.Resolver;
 
 public static class RepositoryRegistrator
 {
     private static bool _AddDbRepositoriesWasCalled;
 
     /// <summary>
-    /// Зарегистрировать интерфейсы репозиториев базы данных с реализацией EntityFramework
+    /// Регистрация необходимых репозиториев БД.
     /// Работает с несколькими контекстами баз данных
     /// </summary>
     public static IServiceCollection AddDbRepositories(this IServiceCollection services)
@@ -27,9 +26,8 @@ public static class RepositoryRegistrator
             ;
     }
 
-
     /// <summary>
-    /// Зарегистрировать интерфейсы репозиториев базы данных с реализацией EntityFramework
+    /// Регистрация необходимых репозиториев БД.
     /// Работает с фабрикой определённой и единственной базой данных
     /// </summary>
     public static IServiceCollection AddDbRepositories<TDb>(this IServiceCollection services) where TDb : DbContext
