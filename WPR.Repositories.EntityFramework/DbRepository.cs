@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using WPR.Entities.Abstractions.Base;
 using WPR.Entities.Abstractions.Db;
 using WPR.Entities.Db;
@@ -21,21 +20,20 @@ namespace WPR.Repositories.EntityFramework;
 /// <typeparam name="T">Сущность БД</typeparam>
 public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity, new()
 {
-    // Контекст БД
 
     private static bool IsDeletedEntity => typeof(IDeletedDbEntity).IsAssignableFrom(typeof(T));
 
 
     /// <summary> Набор данных БД </summary>
-    protected LocalView<T> Set => Db.Set<T>().Local;
+    protected DbSet<T> Set => Db.Set<T>();
 
 
     #region IRepository
-    protected virtual IEnumerable<T> Items
+    protected virtual IQueryable<T> Items
     {
         get
         {
-            IEnumerable<T> itemsQuery = Set;
+            IQueryable<T> itemsQuery = Set;
 
             if (IsDeletedEntity)
                 itemsQuery = itemsQuery.Where(item => !((IDeletedEntity<int>)item).IsDeleted);
@@ -45,11 +43,11 @@ public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity
     }
 
 
-    public Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, object>>? OrderExpression = null, CancellationToken Cancel = default) => 
-        Task.FromResult<IEnumerable<T>>(Items.OrderBy(OrderExpression?.Compile() ?? (item => item.Id)));
+    public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, object>>? OrderExpression = null, CancellationToken Cancel = default) => 
+        await Items.OrderBy(OrderExpression ?? (item => item.Id)).ToArrayAsync(Cancel);
 
-    public Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> Filter, CancellationToken Cancel = default) => 
-        Task.FromResult(Items.Where(Filter.Compile()));
+    public virtual async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> Filter, CancellationToken Cancel = default) =>
+        await Items.Where(Filter).ToArrayAsync(Cancel);
 
 
     public virtual async Task<IPage<T>> GetPageAsync(int PageIndex, int PageSize, Expression<Func<T, object>>? OrderExpression = null, bool Ascending = true, CancellationToken Cancel = default) =>

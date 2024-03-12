@@ -15,7 +15,7 @@ namespace WPR.Repositories.EntityFramework;
 /// <typeparam name="T">IDeletedEntity</typeparam>
 public class DbDeletedRepository<T>(DbContext Db) : DbRepository<T>(Db), IDeletedDbRepository<T> where T : DbEntity, IDeletedDbEntity, new()
 {
-    protected override IEnumerable<T> Items => Set.Where(item => item.IsDeleted);
+    protected override IQueryable<T> Items => Set.Where(item => item.IsDeleted);
 
 
     public override Task<T?> AddAsync(T item, CancellationToken Cancel = default)
