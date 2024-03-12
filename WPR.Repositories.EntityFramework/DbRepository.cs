@@ -11,6 +11,7 @@ using WPR.Entities.Db;
 using WPR.Entities.Paging;
 using WPR.Repositories.Abstractions.Db;
 using WPR.Repositories.Abstractions.Paging;
+using WPR.Repositories.EntityFramework.Resolver;
 
 namespace WPR.Repositories.EntityFramework;
 
@@ -18,14 +19,24 @@ namespace WPR.Repositories.EntityFramework;
 /// Репозиторий сущностей БД
 /// </summary>
 /// <typeparam name="T">Сущность БД</typeparam>
-public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity, new()
+public class DbRepository<T> : IDbRepository<T> where T : DbEntity, new()
 {
+    private readonly DbContext _Db;
+
+    /// <summary>
+    /// Репозиторий сущностей БД
+    /// </summary>
+    /// <typeparam name="T">Сущность БД</typeparam>
+    public DbRepository(IDbResolver DbResolver)
+    {
+        _Db = DbResolver.GetDbContext<T>();
+    }
 
     private static bool IsDeletedEntity => typeof(IDeletedDbEntity).IsAssignableFrom(typeof(T));
 
 
     /// <summary> Набор данных БД </summary>
-    protected DbSet<T> Set => Db.Set<T>();
+    protected DbSet<T> Set => _Db.Set<T>();
 
 
     #region IRepository
@@ -120,11 +131,11 @@ public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity
     {
         if (item == null) throw new ArgumentNullException(nameof(item));
 
-        Db.Entry(item).State = EntityState.Added;
+        _Db.Entry(item).State = EntityState.Added;
 
         try
         {
-            var result = await Db.SaveChangesAsync(Cancel).ConfigureAwait(false) > 0;
+            var result = await _Db.SaveChangesAsync(Cancel).ConfigureAwait(false) > 0;
 
             return result
                 ? item
@@ -142,11 +153,11 @@ public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity
         if (items == null) throw new ArgumentNullException(nameof(items));
 
         foreach (var item in items)
-            Db.Entry(item).State = EntityState.Added;
+            _Db.Entry(item).State = EntityState.Added;
 
         try
         {
-            return await Db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+            return await _Db.SaveChangesAsync(Cancel).ConfigureAwait(false);
         }
         catch (Exception)
         {
@@ -161,7 +172,7 @@ public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity
 
         try
         {
-            var changesCount = await Db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+            var changesCount = await _Db.SaveChangesAsync(Cancel).ConfigureAwait(false);
             var result = changesCount > 0;
 
             return result;
@@ -183,7 +194,7 @@ public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity
 
         try
         {
-            return await Db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+            return await _Db.SaveChangesAsync(Cancel).ConfigureAwait(false);
         }
         catch (Exception)
         {
@@ -200,9 +211,9 @@ public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity
             return false;
 
         if (!ReferenceEquals(localItem, item))
-            Db.Entry(localItem).State = EntityState.Detached;
+            _Db.Entry(localItem).State = EntityState.Detached;
 
-        Db.Entry(item).State = EntityState.Modified;
+        _Db.Entry(item).State = EntityState.Modified;
         return true;
     }
 
@@ -229,7 +240,7 @@ public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity
 
         try
         {
-            return await Db.SaveChangesAsync(Cancel).ConfigureAwait(false) > 0;
+            return await _Db.SaveChangesAsync(Cancel).ConfigureAwait(false) > 0;
         }
         catch (Exception)
         {
@@ -250,7 +261,7 @@ public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity
                 if (entity == null)
                 {
                     var dbEntity = new T { Id = id };
-                    Db.Attach(dbEntity);
+                    _Db.Attach(dbEntity);
                     return dbEntity;
                 }
                 return entity;
@@ -261,7 +272,7 @@ public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity
 
         try
         {
-            return await Db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+            return await _Db.SaveChangesAsync(Cancel).ConfigureAwait(false);
         }
         catch (Exception)
         {
@@ -280,15 +291,15 @@ public class DbRepository<T>(DbContext Db) : IDbRepository<T> where T : DbEntity
             foreach (var item in items)
             {
                 var deletedEntity = (IDeletedEntity<int>)item;
-                Db.Entry(deletedEntity).State = EntityState.Unchanged;
+                _Db.Entry(deletedEntity).State = EntityState.Unchanged;
                 deletedEntity.IsDeleted = true;
-                Db.Entry(deletedEntity)
+                _Db.Entry(deletedEntity)
                     .Property(delItem => delItem.IsDeleted).IsModified = true;
             }
         }
         else
             foreach (var item in items)
-                Db.Entry(item).State = EntityState.Deleted;
+                _Db.Entry(item).State = EntityState.Deleted;
     }
 
     public Task<T?> GetOne(Expression<Func<T, bool>> Match, CancellationToken cancel = default) => Task.FromResult(Items.FirstOrDefault(Match.Compile()));

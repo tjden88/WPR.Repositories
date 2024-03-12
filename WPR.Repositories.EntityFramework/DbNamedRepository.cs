@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using WPR.Entities.Db;
 using WPR.Repositories.Abstractions.Db;
+using WPR.Repositories.EntityFramework.Resolver;
 
 namespace WPR.Repositories.EntityFramework;
 
@@ -11,7 +11,7 @@ namespace WPR.Repositories.EntityFramework;
 /// Репозиторий именованных сущностей БД
 /// </summary>
 /// <typeparam name="T">Именованная сущность</typeparam>
-public class DbNamedRepository<T>(DbContext Db) : DbRepository<T>(Db), INamedDbRepository<T> where T : NamedDbEntity, new()
+public class DbNamedRepository<T>(IDbResolver DbResolver) : DbRepository<T>(DbResolver), INamedDbRepository<T> where T : NamedDbEntity, new()
 {
     public virtual Task<bool> ExistNameAsync(string Name, CancellationToken Cancel = default) =>
         Task.FromResult(Items.Any(item => item.Name == Name));

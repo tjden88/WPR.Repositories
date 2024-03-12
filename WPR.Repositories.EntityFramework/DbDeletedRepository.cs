@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using WPR.Entities.Abstractions.Db;
 using WPR.Entities.Db;
 using WPR.Repositories.Abstractions.Db;
+using WPR.Repositories.EntityFramework.Resolver;
 
 namespace WPR.Repositories.EntityFramework;
 
@@ -13,7 +13,7 @@ namespace WPR.Repositories.EntityFramework;
 /// Репозиторий удалённых сущностей БД
 /// </summary>
 /// <typeparam name="T">IDeletedEntity</typeparam>
-public class DbDeletedRepository<T>(DbContext Db) : DbRepository<T>(Db), IDeletedDbRepository<T> where T : DbEntity, IDeletedDbEntity, new()
+public class DbDeletedRepository<T>(IDbResolver DbResolver) : DbRepository<T>(DbResolver), IDeletedDbRepository<T> where T : DbEntity, IDeletedDbEntity, new()
 {
     protected override IQueryable<T> Items => Set.Where(item => item.IsDeleted);
 
