@@ -14,7 +14,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
-		<Version>1.0.1</Version>
+		<Version>1.1.0</Version>
 		<Description>Базовые реализации репозиториев для баз данных Entity Framework</Description>
 	</PropertyGroup>
 
@@ -35,6 +35,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\WPR.Repositories.Base\WPR.Repositories.Base.csproj" />
+	  <ProjectReference Include="..\WPR.Repositories.Integer\WPR.Repositories.Integer.csproj" />
 	</ItemGroup>
 
 
