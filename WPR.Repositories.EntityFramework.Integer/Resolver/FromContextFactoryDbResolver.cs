@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using WPR.Repositories.EntityFramework.Resolver;
 
-namespace WPR.Repositories.EntityFramework.Resolver;
+namespace WPR.Repositories.EntityFramework.Integer.Resolver;
 
 /// <summary>
 /// Для одной БД в приложении.

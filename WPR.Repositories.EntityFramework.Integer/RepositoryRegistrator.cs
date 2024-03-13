@@ -1,10 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using WPR.Repositories.Abstractions.Db;
+using WPR.Repositories.EntityFramework.Integer.Resolver;
 using WPR.Repositories.EntityFramework.Resolver;
+using WPR.Repositories.Integer;
 
-namespace WPR.Repositories.EntityFramework;
+namespace WPR.Repositories.EntityFramework.Integer;
 
 public static class RepositoryRegistrator
 {
@@ -46,8 +47,8 @@ public static class RepositoryRegistrator
 
 
     private static IServiceCollection AddRepositories(this IServiceCollection services) => services
-        .AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>))
-        .AddScoped(typeof(INamedDbRepository<>), typeof(DbNamedRepository<>))
-        .AddScoped(typeof(IDeletedDbRepository<>), typeof(DbDeletedRepository<>))
+        .AddScoped(typeof(IRepository<>), typeof(DbRepository<>))
+        .AddScoped(typeof(INamedRepository<>), typeof(DbNamedRepository<>))
+        .AddScoped(typeof(IDeletedRepository<>), typeof(DbDeletedRepository<>))
     ;
 }

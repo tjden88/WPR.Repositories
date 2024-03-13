@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+	  <LangVersion>latest</LangVersion>
+	  <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Библиотека репозиториев EF Core с первичным ключом типа int</Title>
+		<Authors>tj_d</Authors>
+		<PackageIcon>repo.jpeg</PackageIcon>
+		<NeutralLanguage>ru</NeutralLanguage>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Version>1.0.1</Version>
+		<Description>Библиотека репозиториев EF Core с первичным ключом типа int</Description>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="C:\Users\Денис\Desktop\repo.jpeg" Link="repo.jpeg">
+	    <PackagePath>\</PackagePath>
+	    <Pack>True</Pack>
+	  </None>
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WPR.Repositories.EntityFramework\WPR.Repositories.EntityFramework.csproj" />
+    <ProjectReference Include="..\WPR.Repositories.Integer\WPR.Repositories.Integer.csproj" />
+  </ItemGroup>
+
+</Project>

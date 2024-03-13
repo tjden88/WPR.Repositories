@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WPR.Entities.Abstractions.Base;
-using WPR.Entities.Abstractions.Db;
 using WPR.Entities.Base;
 using WPR.Entities.Paging;
 using WPR.Repositories.Abstractions.Base;
@@ -33,7 +32,7 @@ public class DbRepository<T, TKey> : IRepository<T, TKey> where T : Entity<TKey>
         _Db = DbResolver.GetDbContext<T>();
     }
 
-    private static bool IsDeletedEntity => typeof(IDeletedDbEntity).IsAssignableFrom(typeof(T));
+    private static bool IsDeletedEntity => typeof(IDeletedEntity<TKey>).IsAssignableFrom(typeof(T));
 
 
     /// <summary> Набор данных БД </summary>

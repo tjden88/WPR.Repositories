@@ -5,9 +5,10 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WPR.Entities.Abstractions.Db;
+using WPR.Entities.Abstractions.Base;
+using WPR.Repositories.EntityFramework.Resolver;
 
-namespace WPR.Repositories.EntityFramework.Resolver;
+namespace WPR.Repositories.EntityFramework.Integer.Resolver;
 
 /// <summary>
 /// Выдаёт контекст из контейнера в зависимости от типа сущности
@@ -80,7 +81,7 @@ internal sealed class MultipleDbResolver : IDbResolver
             var entityTypes = dbContext.Model
                 .GetEntityTypes()
                 .Select(et => et.ClrType)
-                .Where(t => t.IsAssignableTo(typeof(IDbEntity)));
+                .Where(t => t.IsAssignableTo(typeof(IEntity<int>)));
 
             foreach (var entityType in entityTypes)
                 _Types.Add(entityType, contextType);
