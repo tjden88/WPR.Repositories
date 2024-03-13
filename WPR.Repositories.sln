@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.Entities", "WPR.Entities\WPR.Entities.csproj", "{8CA93905-E2DF-467E-BF98-D53960B81808}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.Entities.Abstractions", "WPR.Entities.Abstractions\WPR.Entities.Abstractions.csproj", "{AC7C04ED-5C6C-400F-AA91-3A413D048184}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.Repositories.Abstractions", "WPR.Repositories.Abstractions\WPR.Repositories.Abstractions.csproj", "{7D79B9AF-8FA8-409A-98DC-2036976C8DBD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPR.Repositories.WebApi", "WPR.Repositories.WebApi\WPR.Repositories.WebApi.csproj", "{E1EE5298-30BE-4C1C-B6E8-AD4DBA6FA04C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Repositories.Integer", "WPR.Repositories.Integer\WPR.Repositories.Integer.csproj", "{5AEE5BDB-5A57-41C9-8744-455EE007CA22}"
@@ -31,18 +25,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8CA93905-E2DF-467E-BF98-D53960B81808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CA93905-E2DF-467E-BF98-D53960B81808}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CA93905-E2DF-467E-BF98-D53960B81808}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CA93905-E2DF-467E-BF98-D53960B81808}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC7C04ED-5C6C-400F-AA91-3A413D048184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC7C04ED-5C6C-400F-AA91-3A413D048184}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC7C04ED-5C6C-400F-AA91-3A413D048184}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC7C04ED-5C6C-400F-AA91-3A413D048184}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D79B9AF-8FA8-409A-98DC-2036976C8DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D79B9AF-8FA8-409A-98DC-2036976C8DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D79B9AF-8FA8-409A-98DC-2036976C8DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D79B9AF-8FA8-409A-98DC-2036976C8DBD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E1EE5298-30BE-4C1C-B6E8-AD4DBA6FA04C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E1EE5298-30BE-4C1C-B6E8-AD4DBA6FA04C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1EE5298-30BE-4C1C-B6E8-AD4DBA6FA04C}.Release|Any CPU.ActiveCfg = Release|Any CPU
