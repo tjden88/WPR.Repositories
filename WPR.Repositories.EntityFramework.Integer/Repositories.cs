@@ -1,4 +1,4 @@
-﻿using WPR.Repositories.EntityFramework.Resolver;
+﻿using WPR.Repositories.EntityFramework.Base.Resolver;
 using WPR.Repositories.Integer;
 
 namespace WPR.Repositories.EntityFramework.Integer;

@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using WPR.Repositories.EntityFramework.Resolver;
+using WPR.Repositories.EntityFramework.Base.Resolver;
 
 namespace WPR.Repositories.EntityFramework.Integer.Resolver;
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using WPR.Repositories.EntityFramework.Base.Resolver;
 using WPR.Repositories.EntityFramework.Integer.Resolver;
-using WPR.Repositories.EntityFramework.Resolver;
 using WPR.Repositories.Integer;
 
 namespace WPR.Repositories.EntityFramework.Integer;
