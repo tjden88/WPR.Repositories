@@ -44,7 +44,7 @@ public sealed class Db : DbContext
     }
 }
 
-public class Ent : NamedEntity, IDeletedEntityBase<int>
+public class Ent : NamedEntity, IDeletedEntity
 {
     public bool IsDeleted
     {
