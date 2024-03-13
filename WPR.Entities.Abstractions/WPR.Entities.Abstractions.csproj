@@ -13,6 +13,9 @@
 		<PackageIcon>repo.jpeg</PackageIcon>
 		<NeutralLanguage>ru</NeutralLanguage>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Version>1.0.1</Version>
+		<Description>Интерфейсы сущностей</Description>
+
 	</PropertyGroup>
 
 	<ItemGroup>

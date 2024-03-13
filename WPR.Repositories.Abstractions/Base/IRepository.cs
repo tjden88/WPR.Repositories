@@ -78,6 +78,15 @@ public interface IRepository<TEntity, in TKey> where TEntity : IEntity<TKey> whe
 
 
     /// <summary>
+    /// Получить единственную сущность по предикату
+    /// </summary>
+    /// <param name="Match">Предикат выборки</param>
+    /// <param name="Cancel">Токен отмены</param>
+    /// <returns>null, если ничего не нашлось, либо первая подходящая</returns>
+    Task<TEntity?> GetOne(Expression<Func<TEntity, bool>> Match, CancellationToken Cancel = default);
+
+
+    /// <summary>
     /// Добавить сущность в репозиторий
     /// </summary>
     /// <param name="item">Добавляемая сущность</param>

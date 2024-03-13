@@ -13,7 +13,8 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
-		<Version>8.0.1</Version>
+		<Version>8.0.3</Version>
+		<Description>Реализации репозиториев для баз данных Entity Framework</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
