@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using WPR.Repositories.Base.Entities;
 using WPR.Repositories.Base.Models;
 using WPR.Repositories.Base.Repositories;
 using WPR.Repositories.EntityFramework.Base.Resolver;
@@ -14,7 +15,7 @@ namespace WPR.Repositories.EntityFramework.Base.Repositories;
 /// </summary>
 /// <typeparam name="T">IDeletedEntity</typeparam>
 /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-public class DbDeletedRepositoryBase<T, TKey>(IDbResolver DbResolver) : DbRepositoryBase<T, TKey>(DbResolver), IDeletedRepositoryBase<T, TKey> where T : DeletedEntityBase<TKey>, new() where TKey : IComparable<TKey>
+public class DbDeletedRepositoryBase<T, TKey>(IDbResolver DbResolver) : DbRepositoryBase<T, TKey>(DbResolver), IDeletedRepositoryBase<T, TKey> where T : class, IDeletedEntityBase<TKey>, new() where TKey : IComparable<TKey>
 {
     protected override IQueryable<T> Items => Set.Where(item => item.IsDeleted);
 

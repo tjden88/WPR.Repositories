@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WPR.Repositories.Base.Entities;
 using WPR.Repositories.EntityFramework.Integer;
 using WPR.Repositories.Integer;
 
@@ -21,6 +22,8 @@ var host = builder.Build();
 var scope = host.Services.CreateScope();
 
 var repository = scope.ServiceProvider.GetRequiredService<IRepository<Ent>>();
+var repository2 = scope.ServiceProvider.GetRequiredService<INamedRepository<Ent>>();
+var repository3 = scope.ServiceProvider.GetRequiredService<IDeletedRepository<Ent>>();
 
 Console.ReadKey();
 
@@ -41,7 +44,11 @@ public sealed class Db : DbContext
     }
 }
 
-public class Ent : Entity
+public class Ent : NamedEntity, IDeletedEntityBase<int>
 {
-
+    public bool IsDeleted
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
 }

@@ -5,6 +5,8 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using WPR.Repositories.Base.Entities;
+using WPR.Repositories.Base.Models;
 using WPR.Repositories.EntityFramework.Base.Resolver;
 using WPR.Repositories.Integer;
 
@@ -81,7 +83,7 @@ internal sealed class MultipleDbResolver : IDbResolver
             var entityTypes = dbContext.Model
                 .GetEntityTypes()
                 .Select(et => et.ClrType)
-                .Where(t => t.IsAssignableTo(typeof(Entity)));
+                .Where(t => t.IsAssignableTo(typeof(IEntityBase<int>)));
 
             foreach (var entityType in entityTypes)
                 _Types.Add(entityType, contextType);

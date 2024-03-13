@@ -2,7 +2,7 @@
 
 namespace WPR.Repositories.Integer;
 
-public abstract class Entity : EntityBase<int>;
-public abstract class NamedEntity : NamedEntityBase<int>;
-public abstract class DeletedEntity : DeletedEntityBase<int>;
+public class Entity : EntityBase<int>;
+public class NamedEntity : NamedEntityBase<int>;
+public class DeletedEntity : DeletedEntityBase<int>;
 

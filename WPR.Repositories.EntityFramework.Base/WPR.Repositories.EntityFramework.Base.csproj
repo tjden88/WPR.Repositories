@@ -35,7 +35,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\WPR.Repositories.Base\WPR.Repositories.Base.csproj" />
-	  <ProjectReference Include="..\WPR.Repositories.Integer\WPR.Repositories.Integer.csproj" />
 	</ItemGroup>
 
 

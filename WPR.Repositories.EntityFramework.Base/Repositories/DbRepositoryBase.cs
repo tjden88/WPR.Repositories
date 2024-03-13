@@ -18,7 +18,7 @@ namespace WPR.Repositories.EntityFramework.Base.Repositories;
 /// </summary>
 /// <typeparam name="T">Сущность БД</typeparam>
 /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-public class DbRepositoryBase<T, TKey> : IRepositoryBase<T, TKey> where T : EntityBase<TKey>, new() where TKey : IComparable<TKey>
+public class DbRepositoryBase<T, TKey> : IRepositoryBase<T, TKey> where T : class, IEntityBase<TKey>, new() where TKey : IComparable<TKey>
 {
     private readonly DbContext _Db;
 
