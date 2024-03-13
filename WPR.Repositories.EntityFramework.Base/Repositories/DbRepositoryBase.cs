@@ -11,14 +11,14 @@ using WPR.Repositories.Base.Paging;
 using WPR.Repositories.Base.Repositories;
 using WPR.Repositories.EntityFramework.Base.Resolver;
 
-namespace WPR.Repositories.EntityFramework;
+namespace WPR.Repositories.EntityFramework.Base.Repositories;
 
 /// <summary>
 /// Репозиторий сущностей БД
 /// </summary>
 /// <typeparam name="T">Сущность БД</typeparam>
 /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-public class DbRepository<T, TKey> : IRepositoryBase<T, TKey> where T : EntityBase<TKey>, new() where TKey : IComparable<TKey>
+public class DbRepositoryBase<T, TKey> : IRepositoryBase<T, TKey> where T : EntityBase<TKey>, new() where TKey : IComparable<TKey>
 {
     private readonly DbContext _Db;
 
@@ -26,7 +26,7 @@ public class DbRepository<T, TKey> : IRepositoryBase<T, TKey> where T : EntityBa
     /// Репозиторий сущностей БД
     /// </summary>
     /// <typeparam name="T">Сущность БД</typeparam>
-    public DbRepository(IDbResolver DbResolver)
+    public DbRepositoryBase(IDbResolver DbResolver)
     {
         _Db = DbResolver.GetDbContext<T>();
     }

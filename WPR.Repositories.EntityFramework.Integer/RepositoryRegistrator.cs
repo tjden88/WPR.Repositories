@@ -47,8 +47,8 @@ public static class RepositoryRegistrator
 
 
     private static IServiceCollection AddRepositories(this IServiceCollection services) => services
-        .AddScoped(typeof(IRepository<>), typeof(DbRepository<>))
-        .AddScoped(typeof(INamedRepository<>), typeof(DbNamedRepository<>))
-        .AddScoped(typeof(IDeletedRepository<>), typeof(DbDeletedRepository<>))
+        .AddScoped(typeof(IRepository<>), typeof(DbRepositoryInt<>))
+        .AddScoped(typeof(INamedRepository<>), typeof(DbNamedRepositoryInt<>))
+        .AddScoped(typeof(IDeletedRepository<>), typeof(DbDeletedRepositoryInt<>))
     ;
 }

@@ -6,14 +6,14 @@ using WPR.Repositories.Base.Models;
 using WPR.Repositories.Base.Repositories;
 using WPR.Repositories.EntityFramework.Base.Resolver;
 
-namespace WPR.Repositories.EntityFramework;
+namespace WPR.Repositories.EntityFramework.Base.Repositories;
 
 /// <summary>
 /// Репозиторий именованных сущностей БД
 /// </summary>
 /// <typeparam name="T">Именованная сущность</typeparam>
 /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-public class DbNamedRepository<T, TKey>(IDbResolver DbResolver) : DbRepository<T, TKey>(DbResolver), INamedRepositoryBase<T, TKey> where T : NamedEntityBase<TKey>, new() where TKey : IComparable<TKey>
+public class DbNamedRepositoryBase<T, TKey>(IDbResolver DbResolver) : DbRepositoryBase<T, TKey>(DbResolver), INamedRepositoryBase<T, TKey> where T : NamedEntityBase<TKey>, new() where TKey : IComparable<TKey>
 {
     public virtual Task<bool> ExistNameAsync(string Name, CancellationToken Cancel = default) =>
         Task.FromResult(Items.Any(item => item.Name == Name));

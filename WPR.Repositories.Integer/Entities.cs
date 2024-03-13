@@ -1,5 +1,4 @@
-﻿
-using WPR.Repositories.Base.Models;
+﻿using WPR.Repositories.Base.Models;
 
 namespace WPR.Repositories.Integer;
 
