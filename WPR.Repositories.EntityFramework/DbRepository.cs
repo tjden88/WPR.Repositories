@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WPR.Entities.Abstractions.Base;
 using WPR.Entities.Abstractions.Db;
+using WPR.Entities.Base;
 using WPR.Entities.Db;
 using WPR.Entities.Paging;
+using WPR.Repositories.Abstractions.Base;
 using WPR.Repositories.Abstractions.Db;
 using WPR.Repositories.Abstractions.Paging;
 using WPR.Repositories.EntityFramework.Resolver;
@@ -19,7 +21,8 @@ namespace WPR.Repositories.EntityFramework;
 /// Репозиторий сущностей БД
 /// </summary>
 /// <typeparam name="T">Сущность БД</typeparam>
-public class DbRepository<T> : IDbRepository<T> where T : DbEntity, new()
+/// <typeparam name="TKey"></typeparam>
+public class DbRepository<T, TKey> : IRepository<T, TKey> where T : Entity<TKey>, new() where TKey : IComparable<TKey>
 {
     private readonly DbContext _Db;
 
@@ -121,10 +124,10 @@ public class DbRepository<T> : IDbRepository<T> where T : DbEntity, new()
     public Task<int> CountAsync(Expression<Func<T, bool>> Filter, CancellationToken Cancel = default) => Task.FromResult(Items.Count(Filter.Compile()));
 
 
-    public virtual Task<bool> ExistAsync(int id, CancellationToken Cancel = default) => Task.FromResult(Items.Any(item => Equals(id, item.Id)));
+    public virtual Task<bool> ExistAsync(TKey id, CancellationToken Cancel = default) => Task.FromResult(Items.Any(item => Equals(id, item.Id)));
 
 
-    public virtual Task<T?> GetByIdAsync(int id, CancellationToken Cancel = default) => Task.FromResult(Items.FirstOrDefault(item => item.Id == id));
+    public virtual async Task<T?> GetByIdAsync(TKey id, CancellationToken Cancel = default) =>await Items.FirstOrDefaultAsync(item => item.Id.Equals(id), cancellationToken: Cancel);
 
 
     public virtual async Task<T?> AddAsync(T item, CancellationToken Cancel = default)
@@ -139,11 +142,11 @@ public class DbRepository<T> : IDbRepository<T> where T : DbEntity, new()
 
             return result
                 ? item
-                : null;
+                : default;
         }
         catch (Exception)
         {
-            return null;
+            return default;
         }
     }
 
@@ -227,7 +230,7 @@ public class DbRepository<T> : IDbRepository<T> where T : DbEntity, new()
         await UpdateAsync(item, Cancel).ConfigureAwait(false);
 
 
-    public virtual async Task<bool> DeleteAsync(int id, CancellationToken Cancel = default)
+    public virtual async Task<bool> DeleteAsync(TKey id, CancellationToken Cancel = default)
     {
 
         var item = Items.FirstOrDefault(i => Equals(id, i.Id));
@@ -249,10 +252,9 @@ public class DbRepository<T> : IDbRepository<T> where T : DbEntity, new()
     }
 
 
-    public virtual async Task<int> DeleteRangeAsync(IEnumerable<int> ids, CancellationToken Cancel = default)
+    public virtual async Task<int> DeleteRangeAsync(IEnumerable<TKey> ids, CancellationToken Cancel = default)
     {
-        var existing = Items.Select(item => item.Id)
-            .Where(ids.Contains);
+        var existing = await Items.Select(item => item.Id).Where(id => ids.Contains(id)).ToArrayAsync(Cancel);
 
         var itemsToDelete = existing
             .Select(id =>
