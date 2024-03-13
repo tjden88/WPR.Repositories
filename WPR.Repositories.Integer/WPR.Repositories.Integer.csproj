@@ -13,7 +13,7 @@
 		<PackageIcon>repo.png</PackageIcon>
 		<NeutralLanguage>ru</NeutralLanguage>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>1.1.0</Version>
+		<Version>1.1.2</Version>
 		<Description>Интерфейсы репозиториев и сущностей с первичным ключом типа int</Description>
 	</PropertyGroup>
 

@@ -14,7 +14,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
-		<Version>1.1.0</Version>
+		<Version>1.1.2</Version>
 		<Description>Базовые реализации репозиториев для баз данных Entity Framework</Description>
 	</PropertyGroup>
 
