@@ -15,8 +15,4 @@ builder.ConfigureServices(sc =>
 
 var host = builder.Build();
 
-host.Services.GetKeyedServices()
-
 Console.ReadKey();
-
-class 

@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{42E6E711
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "Tests\TestConsole\TestConsole.csproj", "{DB4467BF-3596-4BEE-94B7-9580EE210FF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPR.Repositories.Base", "WPR.Repositories.Base\WPR.Repositories.Base.csproj", "{257FB77D-7C7E-42F1-BA7A-A12C0BA5C1FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{DB4467BF-3596-4BEE-94B7-9580EE210FF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB4467BF-3596-4BEE-94B7-9580EE210FF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB4467BF-3596-4BEE-94B7-9580EE210FF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{257FB77D-7C7E-42F1-BA7A-A12C0BA5C1FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{257FB77D-7C7E-42F1-BA7A-A12C0BA5C1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{257FB77D-7C7E-42F1-BA7A-A12C0BA5C1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{257FB77D-7C7E-42F1-BA7A-A12C0BA5C1FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
