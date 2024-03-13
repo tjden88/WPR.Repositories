@@ -2,18 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+	  <LangVersion>latest</LangVersion>
+	  <Nullable>enable</Nullable>
   </PropertyGroup>
+
 
 	<PropertyGroup>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>tj_d</Authors>
+		<PackageIcon>repo.png</PackageIcon>
 		<NeutralLanguage>ru</NeutralLanguage>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>1.1.0</Version>
-		<Description>Базовые интерфейсы репозиториев и сущностей. Базовая реализация</Description>
-		<PackageIcon>repo.png</PackageIcon>
+		<Version>1.1.2</Version>
+		<Description>Интерфейсы репозиториев и сущностей с первичным ключом типа int</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -22,6 +23,9 @@
 	    <PackagePath>\</PackagePath>
 	  </None>
 	</ItemGroup>
-	
+
+	<ItemGroup>
+	  <ProjectReference Include="..\WPR.Repositories.Base\WPR.Repositories.Base.csproj" />
+	</ItemGroup>
 
 </Project>
