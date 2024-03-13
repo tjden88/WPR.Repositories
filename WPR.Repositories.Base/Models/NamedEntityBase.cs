@@ -6,7 +6,7 @@ namespace WPR.Repositories.Base.Models;
 /// <summary>
 /// Реализация базовой именованной сущности
 /// </summary>
-public abstract class NamedEntity<TKey> : Entity<TKey>, INamedEntity<TKey> where TKey : IComparable<TKey>
+public abstract class NamedEntityBase<TKey> : EntityBase<TKey>, INamedEntityBase<TKey> where TKey : IComparable<TKey>
 {
     public string Name { get; set; } = null!;
 }

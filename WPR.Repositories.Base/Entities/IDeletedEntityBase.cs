@@ -5,7 +5,7 @@ namespace WPR.Repositories.Base.Entities;
 /// <summary>
 /// Базовая сущность с пометкой удаления
 /// </summary>
-public interface IDeletedEntity<TKey> : IEntity<TKey> where TKey : IComparable<TKey>
+public interface IDeletedEntityBase<TKey> : IEntityBase<TKey> where TKey : IComparable<TKey>
 {
     /// <summary>
     /// Удалена ли сущность

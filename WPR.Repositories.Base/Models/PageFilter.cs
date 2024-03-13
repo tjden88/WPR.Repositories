@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using WPR.Repositories.Base.Paging;
 
 namespace WPR.Repositories.Base.Models;
 

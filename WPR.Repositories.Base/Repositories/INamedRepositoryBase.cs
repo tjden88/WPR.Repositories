@@ -5,7 +5,7 @@ using WPR.Repositories.Base.Entities;
 
 namespace WPR.Repositories.Base.Repositories;
 
-public interface INamedRepository<TEntity, in TKey> : IRepository<TEntity, TKey> where TEntity : INamedEntity<TKey> where TKey : IComparable<TKey>
+public interface INamedRepositoryBase<TEntity, in TKey> : IRepositoryBase<TEntity, TKey> where TEntity : INamedEntityBase<TKey> where TKey : IComparable<TKey>
 {
     /// <summary>
     /// Существует ли сущность в репозитории

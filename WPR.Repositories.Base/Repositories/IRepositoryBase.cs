@@ -13,7 +13,7 @@ namespace WPR.Repositories.Base.Repositories;
 /// </summary>
 /// <typeparam name="TEntity">Сущность</typeparam>
 /// <typeparam name="TKey">Тип идентификатора сущности</typeparam>
-public interface IRepository<TEntity, in TKey> where TEntity : IEntity<TKey> where TKey : IComparable<TKey>
+public interface IRepositoryBase<TEntity, in TKey> where TEntity : IEntityBase<TKey> where TKey : IComparable<TKey>
 {
 
     /// <summary>

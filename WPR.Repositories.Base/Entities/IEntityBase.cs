@@ -6,7 +6,7 @@ namespace WPR.Repositories.Base.Entities;
 /// Базовая сущность
 /// </summary>
 /// <typeparam name="TKey">Тип идентификатора</typeparam>
-public interface IEntity<TKey> : IEquatable<IEntity<TKey>> where TKey : IComparable<TKey>
+public interface IEntityBase<TKey> : IEquatable<IEntityBase<TKey>> where TKey : IComparable<TKey>
 {
     /// <summary>
     /// Уникальный идентификатор

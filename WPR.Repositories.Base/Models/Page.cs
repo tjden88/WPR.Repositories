@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WPR.Repositories.Base.Paging;
 
 namespace WPR.Repositories.Base.Models;
 

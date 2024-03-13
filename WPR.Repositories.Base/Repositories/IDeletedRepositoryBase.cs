@@ -12,9 +12,9 @@ namespace WPR.Repositories.Base.Repositories;
 /// Методы обновления работают как обычно.
 /// Методы удаления - удаляют сущность окончательно
 /// </summary>
-/// <typeparam name="TDeletedEntity">Тип, реализующий IDeletedEntity</typeparam>
+/// <typeparam name="TDeletedEntity">Тип, реализующий IDeletedEntityBase</typeparam>
 /// <typeparam name="TKey">Тип идентификатора сущности</typeparam>
-public interface IDeletedRepository<TDeletedEntity, in TKey> : IRepository<TDeletedEntity, TKey> where TDeletedEntity : IEntity<TKey>, IDeletedEntity<TKey> where TKey : IComparable<TKey>
+public interface IDeletedRepositoryBase<TDeletedEntity, in TKey> : IRepositoryBase<TDeletedEntity, TKey> where TDeletedEntity : IEntityBase<TKey>, IDeletedEntityBase<TKey> where TKey : IComparable<TKey>
 {
 
     /// <summary>
