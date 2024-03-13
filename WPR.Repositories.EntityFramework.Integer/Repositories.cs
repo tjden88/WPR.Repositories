@@ -1,8 +1,8 @@
-﻿using WPR.Entities.Base;
-using WPR.Repositories.EntityFramework.Resolver;
+﻿using WPR.Repositories.EntityFramework.Resolver;
+using WPR.Repositories.Integer;
 
 namespace WPR.Repositories.EntityFramework.Integer;
 
-public class DbRepository<T>(IDbResolver DbResolver) : DbRepository<T, int>(DbResolver) where T : Entity<int>, new();
-public class DbNamedRepository<T>(IDbResolver DbResolver) : DbNamedRepository<T, int>(DbResolver) where T : NamedEntity<int>, new();
-public class DbDeletedRepository<T>(IDbResolver DbResolver) : DbDeletedRepository<T, int>(DbResolver) where T : DeletedEntity<int>, new();
+public class DbRepository<T>(IDbResolver DbResolver) : DbRepository<T, int>(DbResolver) where T : Entity, new();
+public class DbNamedRepository<T>(IDbResolver DbResolver) : DbNamedRepository<T, int>(DbResolver) where T : NamedEntity, new();
+public class DbDeletedRepository<T>(IDbResolver DbResolver) : DbDeletedRepository<T, int>(DbResolver) where T : DeletedEntity, new();
