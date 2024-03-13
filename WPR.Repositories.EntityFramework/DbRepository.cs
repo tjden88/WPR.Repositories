@@ -8,10 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using WPR.Entities.Abstractions.Base;
 using WPR.Entities.Abstractions.Db;
 using WPR.Entities.Base;
-using WPR.Entities.Db;
 using WPR.Entities.Paging;
 using WPR.Repositories.Abstractions.Base;
-using WPR.Repositories.Abstractions.Db;
 using WPR.Repositories.Abstractions.Paging;
 using WPR.Repositories.EntityFramework.Resolver;
 
@@ -21,7 +19,7 @@ namespace WPR.Repositories.EntityFramework;
 /// Репозиторий сущностей БД
 /// </summary>
 /// <typeparam name="T">Сущность БД</typeparam>
-/// <typeparam name="TKey"></typeparam>
+/// <typeparam name="TKey">Тип первичного ключа</typeparam>
 public class DbRepository<T, TKey> : IRepository<T, TKey> where T : Entity<TKey>, new() where TKey : IComparable<TKey>
 {
     private readonly DbContext _Db;
@@ -119,12 +117,12 @@ public class DbRepository<T, TKey> : IRepository<T, TKey> where T : Entity<TKey>
     }
 
 
-    public virtual Task<int> CountAsync(CancellationToken Cancel = default) => Task.FromResult(Items.Count());
+    public virtual async Task<int> CountAsync(CancellationToken Cancel = default) =>await Items.CountAsync(Cancel);
 
-    public Task<int> CountAsync(Expression<Func<T, bool>> Filter, CancellationToken Cancel = default) => Task.FromResult(Items.Count(Filter.Compile()));
+    public virtual async Task<int> CountAsync(Expression<Func<T, bool>> Filter, CancellationToken Cancel = default) => await Items.CountAsync(Filter, cancellationToken: Cancel);
 
 
-    public virtual Task<bool> ExistAsync(TKey id, CancellationToken Cancel = default) => Task.FromResult(Items.Any(item => Equals(id, item.Id)));
+    public virtual async Task<bool> ExistAsync(TKey id, CancellationToken Cancel = default) => await Items.AnyAsync(item => Equals(id, item.Id), cancellationToken: Cancel);
 
 
     public virtual async Task<T?> GetByIdAsync(TKey id, CancellationToken Cancel = default) =>await Items.FirstOrDefaultAsync(item => item.Id.Equals(id), cancellationToken: Cancel);
@@ -304,5 +302,5 @@ public class DbRepository<T, TKey> : IRepository<T, TKey> where T : Entity<TKey>
                 _Db.Entry(item).State = EntityState.Deleted;
     }
 
-    public Task<T?> GetOne(Expression<Func<T, bool>> Match, CancellationToken cancel = default) => Task.FromResult(Items.FirstOrDefault(Match.Compile()));
+    public Task<T?> GetOne(Expression<Func<T, bool>> Match, CancellationToken cancel = default) => Items.FirstOrDefaultAsync(Match, cancellationToken: cancel);
 }

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WPR.Entities.Abstractions.Db;
-using WPR.Entities.Db;
-using WPR.Repositories.Abstractions.Db;
+using WPR.Entities.Base;
+using WPR.Repositories.Abstractions.Base;
 using WPR.Repositories.EntityFramework.Resolver;
 
 namespace WPR.Repositories.EntityFramework;
@@ -13,7 +13,8 @@ namespace WPR.Repositories.EntityFramework;
 /// Репозиторий удалённых сущностей БД
 /// </summary>
 /// <typeparam name="T">IDeletedEntity</typeparam>
-public class DbDeletedRepository<T>(IDbResolver DbResolver) : DbRepository<T>(DbResolver), IDeletedDbRepository<T> where T : DbEntity, IDeletedDbEntity, new()
+/// <typeparam name="TKey">Тип первичного ключа</typeparam>
+public class DbDeletedRepository<T, TKey>(IDbResolver DbResolver) : DbRepository<T, TKey>(DbResolver), IDeletedRepository<T, TKey> where T : DeletedEntity<TKey>, new() where TKey : IComparable<TKey>
 {
     protected override IQueryable<T> Items => Set.Where(item => item.IsDeleted);
 
@@ -35,7 +36,7 @@ public class DbDeletedRepository<T>(IDbResolver DbResolver) : DbRepository<T>(Db
     }
 
 
-    public async Task<T?> RestoreAsync(int id, CancellationToken Cancel = default)
+    public async Task<T?> RestoreAsync(TKey id, CancellationToken Cancel = default)
     {
         var entity = await GetByIdAsync(id, Cancel).ConfigureAwait(false);
 
