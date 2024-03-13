@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Authors>tj_d</Authors>
+		<PackageIcon>repo.png</PackageIcon>
+		<NeutralLanguage>ru</NeutralLanguage>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<Version>1.0.0</Version>
+		<Description>Базовые реализации репозиториев для баз данных Entity Framework</Description>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\Resources\repo.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Condition="'$(TargetFramework)' == 'net8.0'" Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
+		<PackageReference Condition="'$(TargetFramework)' == 'net7.0'" Include="Microsoft.EntityFrameworkCore" Version="7.0.17" />
+		<PackageReference Condition="'$(TargetFramework)' == 'net6.0'" Include="Microsoft.EntityFrameworkCore" Version="6.0.28" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <ProjectReference Include="..\WPR.Repositories.Base\WPR.Repositories.Base.csproj" />
+	</ItemGroup>
+
+
+</Project>
