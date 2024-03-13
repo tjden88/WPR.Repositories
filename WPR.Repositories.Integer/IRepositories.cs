@@ -1,10 +1,10 @@
-﻿using WPR.Entities.Abstractions.Base;
-using WPR.Repositories.Abstractions.Base;
+﻿using WPR.Repositories.Base.Entities;
+using WPR.Repositories.Base.Repositories;
 
 namespace WPR.Repositories.Integer;
 
-public interface IRepository<T> : IRepository<T, int> where T : IEntity<int>;
+public interface IRepository<T> : IRepositoryBase<T, int> where T : IEntityBase<int>;
 
-public interface INamedRepository<T> : INamedRepository<T, int> where T : INamedEntity<int>;
+public interface INamedRepository<T> : INamedRepositoryBase<T, int> where T : INamedEntityBase<int>;
 
-public interface IDeletedRepository<T> : IRepository<T, int> where T : IDeletedEntity<int>;
+public interface IDeletedRepository<T> : IRepositoryBase<T, int> where T : IDeletedEntityBase<int>;

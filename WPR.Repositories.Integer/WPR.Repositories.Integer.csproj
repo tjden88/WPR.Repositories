@@ -9,25 +9,23 @@
 
 	<PropertyGroup>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Title>Интерфейсы репозиториев с первичным ключом типа int</Title>
 		<Authors>tj_d</Authors>
-		<PackageIcon>repo.jpeg</PackageIcon>
+		<PackageIcon>repo.png</PackageIcon>
 		<NeutralLanguage>ru</NeutralLanguage>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Version>1.0.2</Version>
-		<Description>Интерфейсы репозиториев с первичным ключом типа int</Description>
+		<Description>Интерфейсы репозиториев и сущностей с первичным ключом типа int</Description>
 	</PropertyGroup>
 
-
 	<ItemGroup>
-	  <None Include="C:\Users\Денис\Desktop\repo.jpeg" Link="repo.jpeg">
-	    <PackagePath>\</PackagePath>
+	  <None Include="..\Resources\repo.png">
 	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
 	  </None>
 	</ItemGroup>
 
 	<ItemGroup>
-    <ProjectReference Include="..\WPR.Entities\WPR.Entities.csproj" />
-  </ItemGroup>
+	  <ProjectReference Include="..\WPR.Repositories.Base\WPR.Repositories.Base.csproj" />
+	</ItemGroup>
 
 </Project>

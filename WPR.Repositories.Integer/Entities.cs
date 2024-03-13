@@ -1,8 +1,9 @@
-﻿using WPR.Entities.Base;
+﻿
+using WPR.Repositories.Base.Models;
 
 namespace WPR.Repositories.Integer;
 
-public abstract class Entity : Entity<int>;
-public abstract class NamedEntity : NamedEntity<int>;
-public abstract class DeletedEntity : DeletedEntity<int>;
+public abstract class Entity : EntityBase<int>;
+public abstract class NamedEntity : NamedEntityBase<int>;
+public abstract class DeletedEntity : DeletedEntityBase<int>;
 
